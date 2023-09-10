@@ -40,9 +40,9 @@ public class VotingroomController {
 
     //투표 생성, 생성과 동시에 수정코드 반환
     @PutMapping("/create")
-    public String createVotingroom(@RequestBody VotingroomDto requestDto) { //이름입력받을때 크리에이터 네임 따로 받아야함
-        String roomCode = votingroomService.createVotingroom(requestDto);
-        return roomCode;
+    public String createVotingroom(@RequestBody createVoteDto requestDto) { //이름입력받을때 크리에이터 네임 따로 받아야함
+        String modifyCode = votingroomService.createVotingroom(requestDto);
+        return modifyCode;
     }
 
 

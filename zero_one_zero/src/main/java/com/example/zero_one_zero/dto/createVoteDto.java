@@ -13,12 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 
 public class createVoteDto {
-    private String voteTitle;
-    private String voteCreator;
-    private String voteDescription;
-    private String roomCode;
-    private String modifyCode;
     private String creatorName;
+    private String voteTitle;
+    private String voteDescription;
     private List<String> selectList;
     private List<String> participantList;
 

@@ -14,11 +14,9 @@ import com.example.zero_one_zero.repository.VotingRoomRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -90,13 +88,13 @@ public class VotingroomServiceExecuation implements VotingroomService {
 
     @Override
     @Transactional
-    public String createVotingroom(VotingroomDto requestDto) {
+    public String createVotingroom(createVoteDto requestDto) {//룸생성
+        String modifyCode = generateRandomPassword();
         String roomCode = generateRandomPassword();
 
-        Votingroom votingroom = new Votingroom();//룸생성
-
+        Votingroom votingroom = new Votingroom();
         votingroom.setRoomCode(roomCode);
-
+        votingroom.setModifyCode(modifyCode);
         votingroom.setVoteTitle(requestDto.getVoteTitle());
         votingroom.setVoteDescription(requestDto.getVoteDescription());
         votingroom.setCreatorName(requestDto.getCreatorName());
@@ -104,39 +102,26 @@ public class VotingroomServiceExecuation implements VotingroomService {
 
         Votingroom savedroom = votingRoomRepository.save(votingroom);
 
-        /*List<String> participantsList = new ArrayList<>();
-        for (String participantName : participantsList) {
-            Participants participant = new Participants();
-            participant.setParticipantsName(participantName);
-            participant.setVotingroom(votingroom);
-            participant.setIsNameSelected(false);
-            participantsRepository.save(participant);
+        for(String voteItems : requestDto.getSelectList()){
+            VoteValues voteValues = new VoteValues();
+            voteValues.setVotingroom(savedroom);
+            voteValues.setVoteLabel(voteItems);
+            voteValuesRepository.save(voteValues);
         }
 
-        List<String> voteLabelList = new ArrayList<>();
-        for (String voteLabel : voteLabelList) {
-            VoteValues voteValues = new VoteValues();
-            voteValues.setVoteLabel(voteLabel);
-            voteValues.setVotingroom(votingroom);
-            voteValuesRepository.save(voteValues);
-        }*/
+        for(String participantName : requestDto.getParticipantList()){
+            Participants participants = new Participants();
+            participants.setVotingroom(savedroom);
+            participants.setParticipantsName(participantName);
+            participantsRepository.save(participants);
+        }
 
 
 
-        return roomCode;
+        return modifyCode;
     }
 
     private String generateRandomPassword() {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder password = new StringBuilder();
-        Random random = new Random();
-
-        for (int i = 0; i < 12; i++) {
-            password.append(characters.charAt(random.nextInt(characters.length())));
-        } /*
-            password 중복 가능성 있음
-        */
-
-        return password.toString();
+        return UUID.randomUUID().toString();
     }
 }

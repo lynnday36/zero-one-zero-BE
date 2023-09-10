@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/vote")
@@ -40,9 +41,9 @@ public class VotingroomController {
 
     //투표 생성, 생성과 동시에 수정코드 반환
     @PutMapping("/create")
-    public String createVotingroom(@RequestBody createVoteDto requestDto) { //이름입력받을때 크리에이터 네임 따로 받아야함
-        String modifyCode = votingroomService.createVotingroom(requestDto);
-        return modifyCode;
+    public String putCreateNewVote(@RequestBody createVoteDto requestDto) { //이름입력받을때 크리에이터 네임 따로 받아야함
+        String roomCode = votingroomService.createVotingroom(requestDto);
+        return roomCode;
     }
 
 

@@ -118,7 +118,7 @@ public class VotingroomServiceExecuation implements VotingroomService {
 
 
 
-        return modifyCode;
+        return roomCode;
     }
 
     private String generateRandomPassword() {

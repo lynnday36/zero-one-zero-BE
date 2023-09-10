@@ -1,5 +1,6 @@
 package com.example.zero_one_zero.controller;
 import com.example.zero_one_zero.dto.VotingroomDto;
+import com.example.zero_one_zero.dto.createVoteDto;
 import com.example.zero_one_zero.service.VotingroomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,19 +28,22 @@ public class VotingroomController {
             return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY); //틀리면 다시 메인
         }
     }
-    @GetMapping("/{roomId}")
     /*
      *
      *일단 룸아이디로 해놨는데 암호들어오면 리다이렉트 걸거나 해야함->리다이렉트해결*/
-    public VotingroomDto getVoteAsId(@PathVariable Long roomId){
+    @GetMapping("/{roomId}")
+    public VotingroomDto getVoteAsId(@PathVariable Long roomId){ //실질적으로 정보 보여주는 메서드
 
         return votingroomService.getVotingroomDto(roomId);
 
     }
-    /*@GetMapping("/{roomId}/result")
-    public getVoteResult(@PathVariable Long roomId){
 
-    }*/
+    //투표 생성, 생성과 동시에 수정코드 반환
+    @PutMapping("/create")
+    public String createVotingroom(@RequestBody VotingroomDto requestDto) { //이름입력받을때 크리에이터 네임 따로 받아야함
+        String modifyCode = votingroomService.createVotingroom(requestDto);
+        return modifyCode;
+    }
 
 
 }

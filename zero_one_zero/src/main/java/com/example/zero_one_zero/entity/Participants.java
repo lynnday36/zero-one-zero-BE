@@ -1,16 +1,14 @@
 package com.example.zero_one_zero.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @DynamicInsert
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor

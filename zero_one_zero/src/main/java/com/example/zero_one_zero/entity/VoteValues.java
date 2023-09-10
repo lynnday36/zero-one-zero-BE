@@ -21,7 +21,7 @@ public class VoteValues {
         private Long voteValuesId;
 
     @ManyToOne
-    @JoinColumn(name="roomId")//외래키
+    @JoinColumn(name="roomId", referencedColumnName = "roomId")//외래키
         private Votingroom votingroom;
 
     @Column

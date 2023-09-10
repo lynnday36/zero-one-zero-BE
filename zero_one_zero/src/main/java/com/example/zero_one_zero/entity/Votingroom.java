@@ -24,7 +24,7 @@ public class Votingroom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roomId;
-
+    //private List<Participants> participants;
     @Column
     // 투표제목
     private String voteTitle;
@@ -47,5 +47,7 @@ public class Votingroom {
     //is_overed
     @ColumnDefault("false")
     private boolean isOvered;
-
+    /*public List<Participants> getParticipants(){
+        return participants;
+    }*/
 }

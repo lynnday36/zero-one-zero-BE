@@ -25,7 +25,7 @@ public class Participants {
 
         // room_id
     @ManyToOne
-    @JoinColumn(name="roomId")
+    @JoinColumn(name="roomId", referencedColumnName = "roomId")
         private Votingroom votingroom;
     @Column
         // 참석자이름

@@ -32,4 +32,13 @@ class ParticipantsRepositoryTest {
             //데이터확인용으로 돌린거라 어차피 이거 결과는 틀린게 맞음
         }
     }
+
+    @Test
+    void findByRoomIdandName() {
+        Long roomId = 1L;
+        Participants participants = participantsRepository.findByRoomIdandName(roomId, "니노");
+        Votingroom votingroom = new Votingroom(1L, "뭐드실","qwert123","aaaa","중식만허용","니노",12,false);
+        Participants expected = new Participants(11L, votingroom,"니노", true,3L);
+        assertEquals(expected.toString(), participants.toString(), "참가자설렉팅");
+    }
 }

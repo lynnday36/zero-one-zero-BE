@@ -1,6 +1,7 @@
 package com.example.zero_one_zero.controller;
 import com.example.zero_one_zero.dto.VotingroomDto;
 import com.example.zero_one_zero.dto.createVoteDto;
+import com.example.zero_one_zero.service.VotingService;
 import com.example.zero_one_zero.service.VotingroomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 public class VotingroomController {
@@ -24,7 +24,7 @@ public class VotingroomController {
             headers.setLocation(URI.create("/room/"+ roomId));
             return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
         } else {
-            headers.setLocation(URI.create("/vote"));
+            headers.setLocation(URI.create("/"));
             return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY); //틀리면 다시 메인
         }
     }
@@ -37,14 +37,18 @@ public class VotingroomController {
         return votingroomService.getVotingroomDto(roomId);
 
     }
+    @PutMapping("/vote/room/{roomId}/putCastVote")
+    public String putCastVote(){ //투표실행 - voteId가 들어옴
+        return "";
+    }
 
     //투표 생성, 생성과 동시에 입장코드 반환
-    @PostMapping("/putCreateNewVote")
+    @PostMapping("/vote/putCreateNewVote")
     public String putCreateNewVote(@RequestBody createVoteDto requestDto) { //이름입력받을때 크리에이터 네임 따로 받아야함
         String roomCode = votingroomService.createVotingroom(requestDto);
         return roomCode;
     }
-
+//미참여자 = name
 
 
 }

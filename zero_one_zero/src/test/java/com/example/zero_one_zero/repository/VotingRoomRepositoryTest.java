@@ -20,9 +20,9 @@ class VotingRoomRepositoryTest {
     @Test
     void findByCode() {
         {
-            String code = "123456";
+            String code = "qwert123";
             Votingroom votingroom = votingRoomRepository.findByCode(code);
-            Votingroom expected =  new Votingroom(2L, "제주도 숙소","123456","서귀포시말고 갈데있으면 카톡해","샤샤",12,false);
+            Votingroom expected =  new Votingroom(2L, "제주도 숙소","123456","aaaa","서귀포시말고 갈데있으면 카톡해","샤샤",12,false);
             assertEquals(expected.toString(), votingroom.toString(), "찾아낸 방 출력");
         }
     }

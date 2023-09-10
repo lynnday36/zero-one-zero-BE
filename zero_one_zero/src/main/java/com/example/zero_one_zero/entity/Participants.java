@@ -19,7 +19,7 @@ public class Participants {
         // id
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long paricipantsId;
+        private Long participantsId;
 
         // room_id
     @ManyToOne

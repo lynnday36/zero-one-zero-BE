@@ -25,7 +25,7 @@ class VoteValuesRepositoryTest {
         {
             Long roomId = 2L; //몇번방의 선택지들
             List<VoteValues> voteValues = voteValuesRepository.findByRoomId(roomId); //선택지목록저장
-            Votingroom votingroom = new Votingroom(2L, "제주도 숙소","123456","서귀포시말고 갈데있으면 카톡해","샤샤",12,false);
+            Votingroom votingroom = new Votingroom(2L, "제주도 숙소","123456","aaaa","서귀포시말고 갈데있으면 카톡해","샤샤",12,false);
             VoteValues a = new VoteValues(11L, votingroom,"펜션");
             VoteValues b = new VoteValues(12L, votingroom,"게스트하우스");
             VoteValues c = new VoteValues(13L, votingroom,"호텔");

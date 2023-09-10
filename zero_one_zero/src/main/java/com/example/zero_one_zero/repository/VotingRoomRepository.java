@@ -9,6 +9,6 @@ import java.util.List;
 public interface VotingRoomRepository extends JpaRepository<Votingroom, Long> {
 
     List<Votingroom> findAll();
-    @Query(value = "SELECT * FROM votingroom WHERE modify_codes = :Code", nativeQuery = true)
+    @Query(value = "SELECT * FROM votingroom WHERE room_code = :Code", nativeQuery = true)
     Votingroom findByCode(String Code);
 }

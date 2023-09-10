@@ -25,7 +25,7 @@ class ParticipantsRepositoryTest {
         {
             Long roomId = 2L;
             List<Participants> participants = participantsRepository.findByRoomId(roomId);
-            Votingroom votingroom = new Votingroom(2L, "제주도 숙소","123456","서귀포시말고 갈데있으면 카톡해","샤샤",12,false);
+            Votingroom votingroom = new Votingroom(2L, "제주도 숙소","123456","aaaa","서귀포시말고 갈데있으면 카톡해","샤샤",12,false);
             Participants expected = new Participants(13L, votingroom,"하루",true,4L);
             assertEquals(expected.toString(), participants.toString(), "참가자");
             

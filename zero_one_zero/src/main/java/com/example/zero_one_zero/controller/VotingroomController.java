@@ -16,12 +16,12 @@ public class VotingroomController {
     @Autowired
     private VotingroomService votingroomService;
 
-    @GetMapping("/enter/{modifyCode}") //암호들어왔을때 룸아이디페이지로 리다이렉션
-    public ResponseEntity<?> getVote(@PathVariable String modifyCode) {
-        Long roomId = votingroomService.findRoomIdByCode(modifyCode);
+    @GetMapping("/{roomCode}") //룸코드들어왔을때 룸아이디페이지로 리다이렉션
+    public ResponseEntity<?> getVote(@PathVariable String roomCode) {
+        Long roomId = votingroomService.findRoomIdByCode(roomCode);
         HttpHeaders headers = new HttpHeaders();
         if (roomId != null) {
-            headers.setLocation(URI.create("/vote/"+ roomId));
+            headers.setLocation(URI.create("/vote/room/"+ roomId));
             return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
         } else {
             headers.setLocation(URI.create("/vote"));
@@ -30,8 +30,8 @@ public class VotingroomController {
     }
     /*
      *
-     *일단 룸아이디로 해놨는데 암호들어오면 리다이렉트 걸거나 해야함->리다이렉트해결*/
-    @GetMapping("/{roomId}")
+     *일단 룸아이디로 해놨는데 룸코드들어오면 리다이렉트 걸거나 해야함->리다이렉트해결*/
+    @GetMapping("/room/{roomId}")
     public VotingroomDto getVoteAsId(@PathVariable Long roomId){ //실질적으로 정보 보여주는 메서드
 
         return votingroomService.getVotingroomDto(roomId);
@@ -41,8 +41,8 @@ public class VotingroomController {
     //투표 생성, 생성과 동시에 수정코드 반환
     @PutMapping("/create")
     public String createVotingroom(@RequestBody VotingroomDto requestDto) { //이름입력받을때 크리에이터 네임 따로 받아야함
-        String modifyCode = votingroomService.createVotingroom(requestDto);
-        return modifyCode;
+        String roomCode = votingroomService.createVotingroom(requestDto);
+        return roomCode;
     }
 
 

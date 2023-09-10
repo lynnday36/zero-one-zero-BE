@@ -15,6 +15,7 @@ public class VotingroomDto {
     private Long roomId;
     private String voteTitle;
     private String modifyCodes;
+    private String roomCodes;
     private String voteDescription;
     private String creatorName;
     private Integer personSize;

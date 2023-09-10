@@ -29,7 +29,9 @@ public class Votingroom {
 
     @Column
     // 투표수정번호(랜덤)
-    private String modifyCodes;
+    private String roomCode;
+    @Column
+    private String modifyCode;
 
     @Column
     // 투표내용

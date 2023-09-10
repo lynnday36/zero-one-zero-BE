@@ -35,10 +35,6 @@ public class VotingroomServiceExecuation implements VotingroomService {
     @Override
     @Transactional
     public Long findRoomIdByCode(String code) {
-        // Implement the logic to find the room ID by the code.
-        // You can use votingRoomRepository or any other method that suits your needs.
-        // If a matching room is found, return its ID; otherwise, return null.
-        // Example:
         Votingroom votingroom = votingRoomRepository.findByCode(code);
         return votingroom != null ? votingroom.getRoomId() : null;
     }
@@ -63,6 +59,7 @@ public class VotingroomServiceExecuation implements VotingroomService {
 
         return VotingroomDto.builder()
                 .roomId(votingroom.getRoomId())
+                .roomCodes(votingroom.getRoomCode())
                 .creatorName(votingroom.getCreatorName())
                 .voteTitle(votingroom.getVoteTitle())
                 .voteDescription(votingroom.getVoteDescription())
@@ -73,7 +70,7 @@ public class VotingroomServiceExecuation implements VotingroomService {
     }
     private ParticipantsDto convertToParticipantsdto(Participants participants) {
         return ParticipantsDto.builder()
-                .participantsId(participants.getParicipantsId())
+                .participantsId(participants.getParticipantsId())
                 .participantsName(participants.getParticipantsName())
                 .isNameSelected(participants.getIsNameSelected())
                 .voteValuesId(participants.getVoteValuesId())
@@ -94,11 +91,11 @@ public class VotingroomServiceExecuation implements VotingroomService {
     @Override
     @Transactional
     public String createVotingroom(VotingroomDto requestDto) {
-        String modifyCode = generateRandomPassword();
+        String roomCode = generateRandomPassword();
 
         Votingroom votingroom = new Votingroom();//룸생성
 
-        votingroom.setModifyCodes(modifyCode);
+        votingroom.setRoomCode(roomCode);
 
         votingroom.setVoteTitle(requestDto.getVoteTitle());
         votingroom.setVoteDescription(requestDto.getVoteDescription());
@@ -126,7 +123,7 @@ public class VotingroomServiceExecuation implements VotingroomService {
 
 
 
-        return modifyCode;
+        return roomCode;
     }
 
     private String generateRandomPassword() {

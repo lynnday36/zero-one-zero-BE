@@ -16,6 +16,7 @@ public class createVoteDto {
     private String voteTitle;
     private String voteCreator;
     private String voteDescription;
+    private String roomCode;
     private String modifyCode;
     private String creatorName;
     private List<String> selectList;

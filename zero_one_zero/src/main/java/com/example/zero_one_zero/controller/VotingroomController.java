@@ -2,22 +2,44 @@ package com.example.zero_one_zero.controller;
 import com.example.zero_one_zero.dto.VotingroomDto;
 import com.example.zero_one_zero.service.VotingroomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/vote")
 public class VotingroomController {
     @Autowired
     private VotingroomService votingroomService;
+
+    @GetMapping("/enter/{modifyCode}") //암호들어왔을때 룸아이디페이지로 리다이렉션
+    public ResponseEntity<?> getVote(@PathVariable String modifyCode) {
+        Long roomId = votingroomService.findRoomIdByCode(modifyCode);
+        HttpHeaders headers = new HttpHeaders();
+        if (roomId != null) {
+            headers.setLocation(URI.create("/vote/"+ roomId));
+            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+        } else {
+            headers.setLocation(URI.create("/vote"));
+            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY); //틀리면 다시 메인
+        }
+    }
     @GetMapping("/{roomId}")
     /*
-    *
-    *일단 룸아이디로 해놨는데 암호들어오면 리디렉션 걸거나 해야함*/
-    public VotingroomDto getVote(@PathVariable Long roomId){
+     *
+     *일단 룸아이디로 해놨는데 암호들어오면 리다이렉트 걸거나 해야함->리다이렉트해결*/
+    public VotingroomDto getVoteAsId(@PathVariable Long roomId){
 
         return votingroomService.getVotingroomDto(roomId);
 
     }
+    /*@GetMapping("/{roomId}/result")
+    public getVoteResult(@PathVariable Long roomId){
+
+    }*/
 
 
 }

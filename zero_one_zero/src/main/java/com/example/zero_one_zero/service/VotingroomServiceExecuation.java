@@ -27,6 +27,19 @@ public class VotingroomServiceExecuation implements VotingroomService {
     @Autowired
     private VoteValuesRepository voteValuesRepository;
 
+    //코드로 방 찾기
+    @Override
+    public Long findRoomIdByCode(String code) {
+        // Implement the logic to find the room ID by the code.
+        // You can use votingRoomRepository or any other method that suits your needs.
+        // If a matching room is found, return its ID; otherwise, return null.
+        // Example:
+        Votingroom votingroom = votingRoomRepository.findByCode(code);
+        return votingroom != null ? votingroom.getRoomId() : null;
+    }
+
+
+    //투표룸 정보 불러오기
     @Override
     public VotingroomDto getVotingroomDto(Long roomId){
         Votingroom votingroom = votingRoomRepository.findById(roomId)
@@ -69,5 +82,4 @@ public class VotingroomServiceExecuation implements VotingroomService {
                 .roomId(voteValues.getVotingroom().getRoomId())
                 .build();
     }
-
 }

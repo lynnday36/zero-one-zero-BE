@@ -24,7 +24,7 @@ public class VoteController {
     public void selectUser(@PathVariable Long roomId, @RequestBody userSelectDto username){ //유저선택
         votingService.updateParticipantSelection(roomId,username.getUserName());
     }
-    @PutMapping("/room/{roomId}/putCastVote")
+    @PutMapping("/room/{roomId}/putCastVote") //투표 수행 -> 투표 제목 및 선택지 선택된 수, 참석자수, 누적투표수반환
     public ResponseEntity<VoteStatisticsDto> putCastVote(@PathVariable Long roomId, @RequestBody doVoteDto castVoteInfo){//투표실행 - votevalueId, userName가 들어옴
         HttpHeaders headers = new HttpHeaders();
         try{

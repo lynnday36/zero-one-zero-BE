@@ -53,7 +53,7 @@ public class VotingServiceExecuation implements VotingService {
     @Override
     public VoteStatisticsDto calculateVoteResults(Long roomId){
         List<VoteResultDto> result = new ArrayList<>();
-        Long selectdMaxSize = 0L;
+        Long selectedMaxSize = 0L;
         Long voteCount = 0L;
 
         List<Participants> participants = participantsRepository.findByRoomId(roomId);
@@ -72,10 +72,10 @@ public class VotingServiceExecuation implements VotingService {
                 else{
                     result.add(new VoteResultDto(voteValueId,1));
                 }
-                selectdMaxSize = Math.max(selectdMaxSize, participant.getVoteValuesId());
                 voteCount++;
             }
+            selectedMaxSize += (participant.getIsNameSelected() != null && participant.getIsNameSelected()) ? 1L : 0L;
         }
-        return new VoteStatisticsDto(voteTitle,result, selectdMaxSize, voteCount);
+        return new VoteStatisticsDto(voteTitle,result, selectedMaxSize, voteCount);
     }
 }

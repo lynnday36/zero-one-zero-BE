@@ -37,10 +37,6 @@ public class VotingroomController {
         return votingroomService.getVotingroomDto(roomId);
 
     }
-    @PutMapping("/vote/room/{roomId}/putCastVote")
-    public String putCastVote(){ //투표실행 - voteId가 들어옴
-        return "";
-    }
 
     //투표 생성, 생성과 동시에 입장코드 반환
     @PostMapping("/vote/putCreateNewVote")

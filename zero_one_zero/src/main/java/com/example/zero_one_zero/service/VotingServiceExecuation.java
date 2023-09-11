@@ -30,4 +30,17 @@ public class VotingServiceExecuation implements VotingService {
             throw new ResourceNotFoundException("Username", "roomId", username);
         }
     }
-}
+
+    @Override
+    @Transactional
+    public void executeVote(Long roomId, String username, Long voteValueId){
+        Participants participants = participantsRepository.findByRoomIdandName(roomId, username);
+        if(participants != null){
+            participants.setVoteValuesId(voteValueId);
+            participantsRepository.save(participants);
+        }
+        else{
+            throw new ResourceNotFoundException("Username","roomId",username);
+        }
+    }
+} //투표하기 테스트해야함! 안하고잤음

@@ -1,8 +1,6 @@
 package com.example.zero_one_zero.controller;
 
-import com.example.zero_one_zero.dto.VoteStatisticsDto;
-import com.example.zero_one_zero.dto.doVoteDto;
-import com.example.zero_one_zero.dto.userSelectDto;
+import com.example.zero_one_zero.dto.*;
 import com.example.zero_one_zero.exceptions.ResourceNotFoundException;
 import com.example.zero_one_zero.service.VotingService;
 import com.example.zero_one_zero.service.VotingroomService;
@@ -33,6 +31,16 @@ public class VoteController {
             return new ResponseEntity<>(voteStatistics, HttpStatus.OK);
         } catch(ResourceNotFoundException er){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+    @PutMapping("/room/{roomId}/finishVote")
+    public ResponseEntity<finishVoteResponseDto> finishVote(@PathVariable Long roomId, @RequestBody finishVoteRequestDto requestDto) {
+        finishVoteResponseDto responseDto = votingService.finishVote(roomId, requestDto.getModifyCodes());
+
+        if (responseDto != null) {
+            return ResponseEntity.ok(responseDto);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 }

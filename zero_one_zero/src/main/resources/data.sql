@@ -7,3 +7,4 @@ select * from participants;
 select * from vote_values;
 
 SELECT vote_title FROM votingroom WHERE room_Id =1;
+SELECT * FROM participants WHERE room_id = 2 and vote_values_id = null;

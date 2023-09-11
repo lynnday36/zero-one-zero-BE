@@ -15,4 +15,9 @@ public interface ParticipantsRepository extends JpaRepository<Participants,Long>
     List<Participants> findByRoomId(Long roomId);
     @Query(value = "SELECT * FROM participants WHERE room_id = :roomId and participants_name = :username", nativeQuery = true)
     Participants findByRoomIdandName(Long roomId, String username);
+
+    @Query(value = "SELECT * FROM participants WHERE room_id = :roomId and vote_values_id IS null", nativeQuery = true)
+    List<Participants> findByIdandNullUser(Long roomId);
+
+
 }

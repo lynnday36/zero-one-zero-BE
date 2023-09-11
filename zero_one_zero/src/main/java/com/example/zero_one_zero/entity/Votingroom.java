@@ -47,6 +47,7 @@ public class Votingroom {
     //is_overed
     @ColumnDefault("false")
     private boolean isOvered;
+
     /*public List<Participants> getParticipants(){
         return participants;
     }*/

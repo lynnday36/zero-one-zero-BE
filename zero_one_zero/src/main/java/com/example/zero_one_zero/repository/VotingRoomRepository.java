@@ -16,4 +16,6 @@ public interface VotingRoomRepository extends JpaRepository<Votingroom, Long> {
     @Query(value = "SELECT vote_title FROM votingroom WHERE room_Id = :roomId", nativeQuery = true)
     String getVoteTitleByRoomId(Long roomId);
 
+    Votingroom findByRoomId(Long roomId);
+
 }

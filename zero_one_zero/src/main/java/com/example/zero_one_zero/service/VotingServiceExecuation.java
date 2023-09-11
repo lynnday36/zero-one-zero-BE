@@ -1,5 +1,7 @@
 package com.example.zero_one_zero.service;
 
+import com.example.zero_one_zero.dto.VoteResultDto;
+import com.example.zero_one_zero.dto.VoteStatisticsDto;
 import com.example.zero_one_zero.entity.Participants;
 import com.example.zero_one_zero.exceptions.ResourceNotFoundException;
 import com.example.zero_one_zero.repository.ParticipantsRepository;
@@ -8,6 +10,10 @@ import com.example.zero_one_zero.repository.VotingRoomRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VotingServiceExecuation implements VotingService {
@@ -43,4 +49,33 @@ public class VotingServiceExecuation implements VotingService {
             throw new ResourceNotFoundException("Username","roomId",username);
         }
     }
-} //투표하기 테스트해야함! 안하고잤음
+
+    @Override
+    public VoteStatisticsDto calculateVoteResults(Long roomId){
+        List<VoteResultDto> result = new ArrayList<>();
+        Long selectdMaxSize = 0L;
+        Long voteCount = 0L;
+
+        List<Participants> participants = participantsRepository.findByRoomId(roomId);
+        String voteTitle = votingRoomRepository.getVoteTitleByRoomId(roomId);
+        for(Participants participant : participants){
+            Long voteValueId = participant.getVoteValuesId();
+            if(voteValueId != null){
+                Optional<VoteResultDto> existingResult = result.stream()
+                        .filter(r-> r.getVoteValueId().equals(voteValueId))
+                        .findFirst(); //id값찾고
+
+                if (existingResult.isPresent()){ //선택누적
+                    VoteResultDto updateResult = existingResult.get();
+                    updateResult.setSelectedSize(updateResult.getSelectedSize()+1);
+                }
+                else{
+                    result.add(new VoteResultDto(voteValueId,1));
+                }
+                selectdMaxSize = Math.max(selectdMaxSize, participant.getVoteValuesId());
+                voteCount++;
+            }
+        }
+        return new VoteStatisticsDto(voteTitle,result, selectdMaxSize, voteCount);
+    }
+}

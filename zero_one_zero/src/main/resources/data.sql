@@ -5,3 +5,5 @@ INSERT INTO participants(room_id, participants_name,is_name_selected,vote_values
 select * from votingroom;
 select * from participants;
 select * from vote_values;
+
+SELECT vote_title FROM votingroom WHERE room_Id =1;

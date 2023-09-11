@@ -1,14 +1,18 @@
 package com.example.zero_one_zero.controller;
 
+import com.example.zero_one_zero.dto.VoteStatisticsDto;
 import com.example.zero_one_zero.dto.doVoteDto;
 import com.example.zero_one_zero.dto.userSelectDto;
 import com.example.zero_one_zero.exceptions.ResourceNotFoundException;
 import com.example.zero_one_zero.service.VotingService;
 import com.example.zero_one_zero.service.VotingroomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/vote")
@@ -21,12 +25,14 @@ public class VoteController {
         votingService.updateParticipantSelection(roomId,username.getUserName());
     }
     @PutMapping("/room/{roomId}/putCastVote")
-    public ResponseEntity<String> putCastVote(@PathVariable Long roomId, @RequestBody doVoteDto castVoteInfo){ //투표실행 - votevalueID, username가 들어옴
+    public ResponseEntity<VoteStatisticsDto> putCastVote(@PathVariable Long roomId, @RequestBody doVoteDto castVoteInfo){//투표실행 - votevalueId, userName가 들어옴
+        HttpHeaders headers = new HttpHeaders();
         try{
         votingService.executeVote(roomId, castVoteInfo.getUserName(), castVoteInfo.getVoteValueId());
-        return ResponseEntity.ok("Vote Success");
+        VoteStatisticsDto voteStatistics = votingService.calculateVoteResults(roomId);
+            return new ResponseEntity<>(voteStatistics, HttpStatus.OK);
         } catch(ResourceNotFoundException er){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(er.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 }

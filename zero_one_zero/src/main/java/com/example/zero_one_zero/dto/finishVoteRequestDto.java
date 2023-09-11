@@ -11,5 +11,5 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class finishVoteRequestDto {
     private Long roomId;
-    private String modifyCodes;
+    private String modifyCode;
 }

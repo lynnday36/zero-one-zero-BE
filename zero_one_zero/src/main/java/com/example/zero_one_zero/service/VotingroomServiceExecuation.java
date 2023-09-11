@@ -57,12 +57,13 @@ public class VotingroomServiceExecuation implements VotingroomService {
 
         return VotingroomDto.builder()
                 .roomId(votingroom.getRoomId())
-                .roomCodes(votingroom.getRoomCode())
+                .roomCode(votingroom.getRoomCode())
                 .creatorName(votingroom.getCreatorName())
                 .voteTitle(votingroom.getVoteTitle())
                 .voteDescription(votingroom.getVoteDescription())
                 .personSize(votingroom.getPersonSize())
                 .selectList(voteValuesdto)
+                .modifyCode(votingroom.getModifyCode())
                 .participantList(participantsResponses)
                 .build();
     }

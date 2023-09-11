@@ -35,7 +35,7 @@ public class VoteController {
     }
     @PutMapping("/room/{roomId}/finishVote")
     public ResponseEntity<finishVoteResponseDto> finishVote(@PathVariable Long roomId, @RequestBody finishVoteRequestDto requestDto) {
-        finishVoteResponseDto responseDto = votingService.finishVote(roomId, requestDto.getModifyCodes());
+        finishVoteResponseDto responseDto = votingService.finishVote(roomId, requestDto.getModifyCode());
 
         if (responseDto != null) {
             return ResponseEntity.ok(responseDto);

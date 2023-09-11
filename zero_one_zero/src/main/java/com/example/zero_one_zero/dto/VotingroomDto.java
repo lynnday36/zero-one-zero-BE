@@ -14,8 +14,8 @@ import java.util.List;
 public class VotingroomDto {
     private Long roomId;
     private String voteTitle;
-    private String modifyCodes;
-    private String roomCodes;
+    private String modifyCode;
+    private String roomCode;
     private String voteDescription;
     private String creatorName;
     private Integer personSize;

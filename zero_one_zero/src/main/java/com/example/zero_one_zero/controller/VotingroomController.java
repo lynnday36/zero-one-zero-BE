@@ -41,8 +41,8 @@ public class VotingroomController {
     //투표 생성, 생성과 동시에 입장코드 반환
     @PostMapping("/vote/putCreateNewVote")
     public String putCreateNewVote(@RequestBody createVoteDto requestDto) { //이름입력받을때 크리에이터 네임 따로 받아야함
-        String roomCode = votingroomService.createVotingroom(requestDto);
-        return roomCode;
+        String modifyCode = votingroomService.createVotingroom(requestDto);
+        return modifyCode;
     }
 //미참여자 = name
 

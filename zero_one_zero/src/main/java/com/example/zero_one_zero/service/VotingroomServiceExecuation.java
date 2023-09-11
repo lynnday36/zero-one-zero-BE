@@ -119,7 +119,7 @@ public class VotingroomServiceExecuation implements VotingroomService {
 
 
 
-        return roomCode;
+        return modifyCode;
     }
 
     private String generateRandomPassword() {

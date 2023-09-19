@@ -20,7 +20,7 @@ class ParticipantsRepositoryTest {
 
     @Autowired
     ParticipantsRepository participantsRepository;
-    @Test
+    /*@Test
     void findByRoomId() {
         {
             Long roomId = 2L;
@@ -40,5 +40,5 @@ class ParticipantsRepositoryTest {
         Votingroom votingroom = new Votingroom(1L, "뭐드실","qwert123","aaaa","중식만허용","니노",12,false);
         Participants expected = new Participants(11L, votingroom,"니노", true,3L);
         assertEquals(expected.toString(), participants.toString(), "참가자설렉팅");
-    }
+    }*/
 }

@@ -48,7 +48,7 @@ public class VotingroomController {
     }
     //투표 수정, 수정 완료되면 수정된 방으로 리다이렉트
     @PatchMapping("/vote/modifyVote")
-    public ResponseEntity<String> modifyVote(@RequestParam("modifyCode") String modifyCode, @RequestBody VotingroomDto votingroomDto){
+    public ResponseEntity<?> modifyVote(@RequestParam("modifyCode") String modifyCode, @RequestBody VotingroomDto votingroomDto){
         HttpHeaders headers = new HttpHeaders();
         try{
             votingroomService.modifyVote(modifyCode, votingroomDto);

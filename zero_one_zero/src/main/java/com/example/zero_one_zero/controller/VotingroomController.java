@@ -27,7 +27,6 @@ public class VotingroomController {
             headers.setLocation(URI.create("/room/"+ roomId));
             return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
         } else {
-            headers.setLocation(URI.create("/"));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); //틀리면 404
         }
     }

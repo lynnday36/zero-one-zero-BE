@@ -10,4 +10,6 @@ public interface VotingroomService {
 
     @Transactional
     String createVotingroom(createVoteDto requestDto);
+
+    void modifyVote(String modifyCode, VotingroomDto votingroomDto);
 }

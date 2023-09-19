@@ -15,6 +15,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -124,5 +125,36 @@ public class VotingroomServiceExecuation implements VotingroomService {
 
     private String generateRandomPassword() {
         return UUID.randomUUID().toString();
+    }
+
+    @Override
+    @Transactional
+    public void modifyVote(String modifyCode, VotingroomDto votingroomDto){
+
+        Votingroom votingroom = votingRoomRepository.findByModifyCode(modifyCode)
+                .orElseThrow(()->new ResourceNotFoundException("room","Code",modifyCode));
+
+        //참가자 수정사항 수정
+
+        for(ParticipantsDto participantsDto : votingroomDto.getParticipantList()){
+            Participants participants = participantsRepository.findById(participantsDto.getParticipantsId())
+                    .orElseThrow(()-> new ResolutionException("Cannot find participant with ID : " + participantsDto.getParticipantsId()));
+            participants.setParticipantsName(participantsDto.getParticipantsName());
+            participantsRepository.save(participants);
+        }
+
+        for(VoteValuesDto voteValuesDto : votingroomDto.getSelectList()){
+            VoteValues voteValues = voteValuesRepository.findById(voteValuesDto.getVoteValuesId())
+                    .orElseThrow(()-> new ResolutionException("Cannot find votelabel with ID : " + voteValuesDto.getVoteValuesId()));
+            voteValues.setVoteLabel(voteValuesDto.getVoteLabel());
+            voteValuesRepository.save(voteValues);
+        }
+
+        //투표방관련사항 수정
+        votingroom.setVoteTitle(votingroomDto.getVoteTitle());
+        votingroom.setVoteDescription(votingroomDto.getVoteDescription());
+        votingroom.setCreatorName(votingroomDto.getCreatorName());
+        votingroom.setPersonSize(votingroomDto.getParticipantList().size()+1);
+        votingRoomRepository.save(votingroom);
     }
 }

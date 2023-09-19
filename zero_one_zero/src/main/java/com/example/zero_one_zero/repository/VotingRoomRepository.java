@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface VotingRoomRepository extends JpaRepository<Votingroom, Long> {
 
@@ -18,4 +19,5 @@ public interface VotingRoomRepository extends JpaRepository<Votingroom, Long> {
 
     Votingroom findByRoomId(Long roomId);
 
+    Optional<Votingroom> findByModifyCode(String modifyCode);
 }

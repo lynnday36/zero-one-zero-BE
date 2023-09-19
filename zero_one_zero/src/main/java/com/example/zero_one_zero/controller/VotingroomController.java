@@ -14,26 +14,27 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
+@RequestMapping("/vote")
 public class VotingroomController {
     @Autowired
     private VotingroomService votingroomService;
 
-    @GetMapping("/vote/{roomCode}") //룸코드들어왔을때 룸아이디페이지로 리다이렉션
+    @GetMapping("/{roomCode}") //룸코드들어왔을때 룸아이디페이지로 리다이렉션
     public ResponseEntity<?> getVote(@PathVariable String roomCode) {
         Long roomId = votingroomService.findRoomIdByCode(roomCode);
         HttpHeaders headers = new HttpHeaders();
         if (roomId != null) {
-            headers.setLocation(URI.create("/vote/room/"+ roomId));
+            headers.setLocation(URI.create("/room/"+ roomId));
             return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
         } else {
             headers.setLocation(URI.create("/"));
-            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY); //틀리면 다시 메인
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); //틀리면 404
         }
     }
     /*
      *
      *일단 룸아이디로 해놨는데 룸코드들어오면 리다이렉트 걸거나 해야함->리다이렉트해결*/
-    @GetMapping("/vote/room/{roomId}")
+    @GetMapping("/room/{roomId}")
     public VotingroomDto getVoteAsId(@PathVariable Long roomId){ //실질적으로 정보 보여주는 메서드
 
         return votingroomService.getVotingroomDto(roomId);
@@ -41,13 +42,13 @@ public class VotingroomController {
     }
 
     //투표 생성, 생성과 동시에 입장코드 반환
-    @PostMapping("/vote/putCreateNewVote")
+    @PostMapping("/putCreateNewVote")
     public String putCreateNewVote(@RequestBody createVoteDto requestDto) { //이름입력받을때 크리에이터 네임 따로 받아야함
         String modifyCode = votingroomService.createVotingroom(requestDto);
         return modifyCode;
     }
     //투표 수정, 수정 완료되면 수정된 방으로 리다이렉트
-    @PatchMapping("/vote/modifyVote")
+    @PatchMapping("/modifyVote")
     public ResponseEntity<?> modifyVote(@RequestParam("modifyCode") String modifyCode, @RequestBody VotingroomDto votingroomDto){
         HttpHeaders headers = new HttpHeaders();
         try{

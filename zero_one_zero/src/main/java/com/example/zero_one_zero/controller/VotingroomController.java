@@ -24,10 +24,9 @@ public class VotingroomController {
         Long roomId = votingroomService.findRoomIdByCode(roomCode);
         HttpHeaders headers = new HttpHeaders();
         if (roomId != null) {
-            headers.setLocation(URI.create("/room/"+ roomId));
+            headers.setLocation(URI.create("/vote/room/"+ roomId));
             return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
         } else {
-            headers.setLocation(URI.create("/"));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); //틀리면 404
         }
     }

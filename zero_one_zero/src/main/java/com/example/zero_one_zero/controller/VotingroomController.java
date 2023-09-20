@@ -23,7 +23,7 @@ public class VotingroomController {
         Long roomId = votingroomService.findRoomIdByCode(roomCode);
         HttpHeaders headers = new HttpHeaders();
         if (roomId != null) {
-            headers.setLocation(URI.create(":8080/vote/room/"+ roomId));
+            headers.setLocation(URI.create("/vote/room/"+ roomId));
             return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); //틀리면 404
@@ -51,7 +51,7 @@ public class VotingroomController {
         HttpHeaders headers = new HttpHeaders();
         try{
             votingroomService.modifyVote(modifyCode, votingroomDto);
-            headers.setLocation(URI.create(":8080/vote/room/"+ votingroomDto.getRoomId()));
+            headers.setLocation(URI.create("/vote/room/"+ votingroomDto.getRoomId()));
             return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
         } catch(ResourceNotFoundException e){
             return ResponseEntity.notFound().build();

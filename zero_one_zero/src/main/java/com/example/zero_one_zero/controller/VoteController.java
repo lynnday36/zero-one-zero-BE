@@ -1,7 +1,9 @@
 package com.example.zero_one_zero.controller;
 
 import com.example.zero_one_zero.dto.*;
+import com.example.zero_one_zero.entity.Votingroom;
 import com.example.zero_one_zero.exceptions.ResourceNotFoundException;
+import com.example.zero_one_zero.repository.VotingRoomRepository;
 import com.example.zero_one_zero.service.VotingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,7 @@ public class VoteController {
         votingService.executeVote(roomId, castVoteInfo.getUserName(), castVoteInfo.getVoteValueId());
             return ResponseEntity.ok("vote success");
         } catch(ResourceNotFoundException er){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("vote failed");
         }
     }
 

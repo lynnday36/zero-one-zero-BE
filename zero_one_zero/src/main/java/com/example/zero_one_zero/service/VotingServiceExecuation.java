@@ -29,19 +29,6 @@ public class VotingServiceExecuation implements VotingService {
     @Autowired
     private VoteValuesRepository voteValuesRepository;
 
-    @Override
-    @Transactional
-    public void updateParticipantSelection(Long roomId, String username) {
-        Participants participant = participantsRepository.findByRoomIdandName(roomId, username); //ok
-        if (participant != null) {
-            participant.setIsNameSelected(true);
-            participantsRepository.save(participant); // Save the updated participant
-        }
-        else {
-            throw new ResourceNotFoundException("Username", "roomId", username);
-        }
-    }
-
     //투표실행
     @Override
     @Transactional
@@ -65,6 +52,11 @@ public class VotingServiceExecuation implements VotingService {
         List<VoteResultDto> result = new ArrayList<>();
         Long selectedMaxSize = 0L;
         Long voteCount = 0L;
+
+        Votingroom votingRoom = votingRoomRepository.findByRoomId(roomId);
+        if (votingRoom == null) {
+            throw new ResourceNotFoundException("Not found");
+        }
 
         List<Participants> participants = participantsRepository.findByRoomId(roomId);
         String voteTitle = votingRoomRepository.getVoteTitleByRoomId(roomId);
@@ -106,6 +98,10 @@ public class VotingServiceExecuation implements VotingService {
             Participants randomParticipant = notVotedParticipants.get(randomIdx);
             return new finishVoteResponseDto(randomParticipant.getParticipantsName());
         }
+        else if(notVotedParticipants.isEmpty()){
+            return new finishVoteResponseDto(null);
+        }
+
         return null;
     }
 }

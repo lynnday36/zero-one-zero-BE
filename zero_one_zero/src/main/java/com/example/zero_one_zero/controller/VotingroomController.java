@@ -1,11 +1,8 @@
 package com.example.zero_one_zero.controller;
 import com.example.zero_one_zero.dto.VotingroomDto;
 import com.example.zero_one_zero.dto.createVoteDto;
-import com.example.zero_one_zero.exceptions.ResourceNotFoundException;
-import com.example.zero_one_zero.service.VotingService;
 import com.example.zero_one_zero.service.VotingroomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,21 +47,5 @@ public class VotingroomController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Room creating failed"); //틀리면 500
         }
     }
-
-    /*투표 수정, 수정 완료되면 수정된 방으로 리다이렉트-기능삭제
-    @PatchMapping("/vote/modifyVote")
-    public ResponseEntity<?> modifyVote(@RequestParam("modifyCode") String modifyCode, @RequestBody VotingroomDto votingroomDto){
-        HttpHeaders headers = new HttpHeaders();
-        try{
-            votingroomService.modifyVote(modifyCode, votingroomDto);
-            headers.setLocation(URI.create("/vote/room/"+ votingroomDto.getRoomId()));
-            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
-        } catch(ResourceNotFoundException e){
-            return ResponseEntity.notFound().build();
-        } catch(Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("update error");
-        }
-    }*/
-
 
 }

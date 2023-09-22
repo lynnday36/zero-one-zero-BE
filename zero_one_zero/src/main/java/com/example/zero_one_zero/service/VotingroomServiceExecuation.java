@@ -91,12 +91,11 @@ public class VotingroomServiceExecuation implements VotingroomService {
     @Override
     @Transactional
     public String createVotingroom(createVoteDto requestDto) {//룸생성
-        String modifyCode = generateRandomPassword();
         String roomCode = generateRandomPassword();
 
         Votingroom votingroom = new Votingroom();
         votingroom.setRoomCode(roomCode);
-        votingroom.setModifyCode(modifyCode);
+        votingroom.setModifyCode(requestDto.getModifyCode());
         votingroom.setVoteTitle(requestDto.getVoteTitle());
         votingroom.setVoteDescription(requestDto.getVoteDescription());
         votingroom.setCreatorName(requestDto.getCreatorName());
@@ -117,16 +116,13 @@ public class VotingroomServiceExecuation implements VotingroomService {
             participants.setParticipantsName(participantName);
             participantsRepository.save(participants);
         }
-
-
-
-        return modifyCode;
+        return roomCode;
     }
 
     private String generateRandomPassword() {
         return UUID.randomUUID().toString();
     }
-
+/*
     @Override
     @Transactional
     public void modifyVote(String modifyCode, VotingroomDto votingroomDto){
@@ -156,5 +152,5 @@ public class VotingroomServiceExecuation implements VotingroomService {
         votingroom.setCreatorName(votingroomDto.getCreatorName());
         votingroom.setPersonSize(votingroomDto.getParticipantList().size()+1);
         votingRoomRepository.save(votingroom);
-    }
+    }*/
 }

@@ -18,11 +18,12 @@ public class VoteController {
     @Autowired
     private VotingService votingService;
 
-    @PutMapping("/room/{roomId}/selectUser") //유저선택시 IsSelected true, json 인풋값 username : string
+    /*@PutMapping("/room/{roomId}/selectUser") //유저선택시 IsSelected true, json 인풋값 username : string
     public void selectUser(@PathVariable Long roomId, @RequestBody userSelectDto username){ //유저선택
         votingService.updateParticipantSelection(roomId,username.getUserName());
-    }
-    @PutMapping("/room/{roomId}/putCastVote") //투표 수행 -> 투표 제목 및 선택지 선택된 수, 참석자수, 누적투표수반환
+    }*/
+
+    @PutMapping("/room/{roomId}/putCastVote") //투표 수행 -> 성공/fail 여부, 이때 selectedname이랑 votevalueid 모두 변경
     public ResponseEntity<VoteStatisticsDto> putCastVote(@PathVariable Long roomId, @RequestBody doVoteDto castVoteInfo){//투표실행 - votevalueId, userName가 들어옴
         HttpHeaders headers = new HttpHeaders();
         try{
@@ -31,8 +32,9 @@ public class VoteController {
             return new ResponseEntity<>(voteStatistics, HttpStatus.OK);
         } catch(ResourceNotFoundException er){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        } //이건 성공/fail 여부만 하고 투표 결과 리턴하는 api를 따로 빼기
     }
+
     @PutMapping("/room/{roomId}/finishVote")
     public ResponseEntity<finishVoteResponseDto> finishVote(@PathVariable Long roomId, @RequestBody finishVoteRequestDto requestDto) {
         finishVoteResponseDto responseDto = votingService.finishVote(roomId, requestDto.getModifyCode());

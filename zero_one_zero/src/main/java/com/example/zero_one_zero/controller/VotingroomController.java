@@ -42,10 +42,11 @@ public class VotingroomController {
     //투표 생성, 생성과 동시에 입장코드 반환
     @PostMapping("/vote/putCreateNewVote")
     public String putCreateNewVote(@RequestBody createVoteDto requestDto) { //이름입력받을때 크리에이터 네임 따로 받아야함
-        String modifyCode = votingroomService.createVotingroom(requestDto);
-        return modifyCode;
+        String roomCode = votingroomService.createVotingroom(requestDto);
+
+        return roomCode; //success 하면 룸코드 리턴, 아니면 500
     }
-    //투표 수정, 수정 완료되면 수정된 방으로 리다이렉트
+    /*투표 수정, 수정 완료되면 수정된 방으로 리다이렉트-기능삭제
     @PatchMapping("/vote/modifyVote")
     public ResponseEntity<?> modifyVote(@RequestParam("modifyCode") String modifyCode, @RequestBody VotingroomDto votingroomDto){
         HttpHeaders headers = new HttpHeaders();
@@ -58,7 +59,7 @@ public class VotingroomController {
         } catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("update error");
         }
-    }
+    }*/
 
 
 }

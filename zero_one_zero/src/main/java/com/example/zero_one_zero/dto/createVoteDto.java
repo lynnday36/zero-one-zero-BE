@@ -15,6 +15,7 @@ import java.util.List;
 public class createVoteDto {
     private String creatorName;
     private String voteTitle;
+    private String modifyCode;
     private String voteDescription;
     private List<String> selectList;
     private List<String> participantList;

@@ -49,6 +49,7 @@ public class VotingServiceExecuation implements VotingService {
         Participants participants = participantsRepository.findByRoomIdandName(roomId, username);
         if(participants != null){
             participants.setVoteValuesId(voteValueId);
+            participants.setIsNameSelected(true);
             participantsRepository.save(participants);
         }
         else{

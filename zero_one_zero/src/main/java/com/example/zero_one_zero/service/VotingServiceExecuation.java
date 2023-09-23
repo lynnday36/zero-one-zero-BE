@@ -4,6 +4,7 @@ import com.example.zero_one_zero.dto.VoteResultDto;
 import com.example.zero_one_zero.dto.VoteStatisticsDto;
 import com.example.zero_one_zero.dto.finishVoteResponseDto;
 import com.example.zero_one_zero.entity.Participants;
+import com.example.zero_one_zero.entity.VoteValues;
 import com.example.zero_one_zero.entity.Votingroom;
 import com.example.zero_one_zero.exceptions.ResourceNotFoundException;
 import com.example.zero_one_zero.repository.ParticipantsRepository;
@@ -13,10 +14,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class VotingServiceExecuation implements VotingService {
@@ -48,7 +46,7 @@ public class VotingServiceExecuation implements VotingService {
     @Transactional
     public VoteStatisticsDto calculateVoteResults(Long roomId){
         List<VoteResultDto> result = new ArrayList<>();
-        Long selectedMaxSize = 0L;
+        int peopleMaxSize = 0;
         Long voteCount = 0L;
 
         Votingroom votingRoom = votingRoomRepository.findByRoomId(roomId);
@@ -58,6 +56,19 @@ public class VotingServiceExecuation implements VotingService {
 
         List<Participants> participants = participantsRepository.findByRoomId(roomId);
         String voteTitle = votingRoomRepository.getVoteTitleByRoomId(roomId);
+
+        Map<Long, String> voteLabelMap = new HashMap<>(); //라벨불러오기
+        List<VoteValues> voteValuesList = voteValuesRepository.findByRoomId(roomId);
+        for(VoteValues voteValues : voteValuesList){
+            voteLabelMap.put(voteValues.getVoteValuesId(), voteValues.getVoteLabel());
+        }
+
+        for (VoteValues voteValue : voteValuesList) {
+            result.add(new VoteResultDto(voteValue.getVoteValuesId(), 0, voteValue.getVoteLabel())); //투표안된 선택지때문에 0으로 이니셜라이징
+        }
+
+        peopleMaxSize = participants.size(); //총명수
+
         for(Participants participant : participants){
             Long voteValueId = participant.getVoteValuesId();
             if(voteValueId != null){
@@ -69,14 +80,11 @@ public class VotingServiceExecuation implements VotingService {
                     VoteResultDto updateResult = existingResult.get();
                     updateResult.setSelectedSize(updateResult.getSelectedSize()+1);
                 }
-                else{
-                    result.add(new VoteResultDto(voteValueId,1));
-                }
                 voteCount++;
             }
-            selectedMaxSize += (participant.getIsNameSelected() != null && participant.getIsNameSelected()) ? 1L : 0L;
         }
-        return new VoteStatisticsDto(voteTitle,result, selectedMaxSize, voteCount);
+
+        return new VoteStatisticsDto(voteTitle,result, peopleMaxSize, voteCount);
     }
     //투표종료
     @Override

@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class VoteResultDto {
     private Long voteValueId;
     private int selectedSize;
+    private String voteLabel;
 }

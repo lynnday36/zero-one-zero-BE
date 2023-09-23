@@ -12,6 +12,6 @@ import java.util.List;
 public class VoteStatisticsDto {
     private String voteTitle;
     private List<VoteResultDto> result;
-    private Long selectedMaxSize;
+    private int peopleMaxSize;
     private Long cumulativeVoteCount;
 }

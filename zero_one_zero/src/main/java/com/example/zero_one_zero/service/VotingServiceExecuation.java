@@ -46,7 +46,7 @@ public class VotingServiceExecuation implements VotingService {
     @Transactional
     public VoteStatisticsDto calculateVoteResults(Long roomId){
         List<VoteResultDto> result = new ArrayList<>();
-        Long selectedMaxSize = 0L;
+        int peopleMaxSize = 0;
         Long voteCount = 0L;
 
         Votingroom votingRoom = votingRoomRepository.findByRoomId(roomId);
@@ -67,6 +67,8 @@ public class VotingServiceExecuation implements VotingService {
             result.add(new VoteResultDto(voteValue.getVoteValuesId(), 0, voteValue.getVoteLabel())); //투표안된 선택지때문에 0으로 이니셜라이징
         }
 
+        peopleMaxSize = participants.size(); //총명수
+
         for(Participants participant : participants){
             Long voteValueId = participant.getVoteValuesId();
             if(voteValueId != null){
@@ -80,10 +82,9 @@ public class VotingServiceExecuation implements VotingService {
                 }
                 voteCount++;
             }
-            selectedMaxSize += (participant.getIsNameSelected() != null && participant.getIsNameSelected()) ? 1L : 0L; //총명수로 바꿔야함
         }
 
-        return new VoteStatisticsDto(voteTitle,result, selectedMaxSize, voteCount);
+        return new VoteStatisticsDto(voteTitle,result, peopleMaxSize, voteCount);
     }
     //투표종료
     @Override

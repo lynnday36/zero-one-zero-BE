@@ -65,6 +65,7 @@ public class VotingroomServiceExecuation implements VotingroomService {
                 .selectList(voteValuesdto)
                 .modifyCode(votingroom.getModifyCode())
                 .participantList(participantsResponses)
+                .isOvered(votingroom.isOvered()) //boolean getter은 get이아니라 is형식 ->isOverd 업뎃정보 받아오도록
                 .build();
     }
     private ParticipantsDto convertToParticipantsdto(Participants participants) {

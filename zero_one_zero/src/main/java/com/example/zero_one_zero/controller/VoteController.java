@@ -1,9 +1,7 @@
 package com.example.zero_one_zero.controller;
 
 import com.example.zero_one_zero.dto.*;
-import com.example.zero_one_zero.entity.Votingroom;
 import com.example.zero_one_zero.exceptions.ResourceNotFoundException;
-import com.example.zero_one_zero.repository.VotingRoomRepository;
 import com.example.zero_one_zero.service.VotingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

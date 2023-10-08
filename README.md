@@ -44,6 +44,8 @@
 
 - **NextJS**
 - **Typescript**
+- **Java**
+- **Spring Boot**
 
 </br>
 
